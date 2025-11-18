@@ -19,43 +19,44 @@ Testing covered routing, navigation, checkout workflow, and accessibility of maj
 
 ## BUG 001
 *Component:* Checkout  
-*Summary:* UI shows USD ($) while payment gateway uses KES  
+*Summary:* Payment Currency mismatch
 *Steps to Reproduce:*  
-1. Open any product page.  
-2. Observe displayed price.  
-3. Proceed to checkout and view payment gateway.  
-*Expected Result:* Currency should match across UI and gateway.  
-*Actual Result:* UI uses USD; gateway uses KES.  
-*Severity:* High  
+1. click the payment button
+2. Wait for payment next procedure
+  
+*Expected results:* next procedure to load up
+*Actual results:* does load up next procedure due to mismatch Currence
+*Test type*: Manual
 *Priority:* High  
 *Status:* Open  
 *Assignee:* Lena
 
 ---
-
 ## BUG 002
-*Component:* Cart  
-*Summary:* Rounding inconsistencies between line totals and grand total  
+*Component:* checkout 
+*Summary:* Payment failure due to network
 *Steps to Reproduce:*  
-1. Add multiple books with decimal pricing.  
-2. Compare line totals vs final grand total.  
-*Expected Result:* All totals must be consistently rounded.  
-*Actual Result:* Differences occur due to inconsistent rounding.  
-*Severity:* Medium  
-*Priority:* Medium  
+1. Click the payment button
+2. Wait for it to load.  
+*Expected results:* To load the payment section
+*Actual results:* fails to load due to network error
+*Test type*: manual
+*Severity:* Low  
+*Priority:* Low  
 *Status:* Open  
-*Assignee:* Prifton
+*Assignee:* Lena
 
 ---
 
 ## BUG 003
-*Component:* Returns Module  
-*Summary:* System incorrectly accepts returns on Day 8  
+*Component:* Checkout 
+*Summary:* Postal code validation  
 *Steps to Reproduce:*  
-1. Purchase an item.  
-2. Attempt a return 8 days after order date.  
-*Expected Result:* System should reject returns after Day 7.  
-*Actual Result:* Return is accepted on Day 8.  
+1. Input numbers and letters on the postal code input section
+2. Click to proceed next
+*Expected results:* show postal code validation error
+*Actual Result:* proceed to next process
+*Test type:* Manual
 *Severity:* Medium  
 *Priority:* Medium  
 *Status:* Open  
@@ -64,32 +65,35 @@ Testing covered routing, navigation, checkout workflow, and accessibility of maj
 ---
 
 ## BUG 004
-*Component:* Markdown / Reviews  
-*Summary:* XSS allowed via javascript: markdown link  
+*Component:* Search
+*Summary:* Product search functionality
 *Steps to Reproduce:*  
-1. Submit review with: [test](javascript:alert('XSS')).  
-2. View rendered review.  
-*Expected Result:* Unsafe URL schemes blocked.  
-*Actual Result:* Browser executes JavaScript.  
+1. Locate search input field
+2. Enter search term "1984
+3. Click search button or press Enter
+4. Observe search results
+*Expected Result:* Only books containing "1984" in title/author/description are displayed
+*Actual Result:* one search input works perfectly while the other doesn't not
+*Test type:* Manual
 *Severity:* Critical  
 *Priority:* Critical  
 *Status:* Open  
 *Assignee:* Peter
 
 ---
-
 ## BUG 005
-*Component:* Mini-Cart  
-*Summary:* User can exceed available stock due to race condition  
+*Component:* Shipping Form  
+*Summary:* Weak email validation allows invalid addresses  
 *Steps to Reproduce:*  
-1. Add item with low stock.  
-2. Rapidly increase quantity in mini-cart.  
-*Expected Result:* Quantity capped at stock limit.  
-*Actual Result:* Quantity exceeds available stock.  
-*Severity:* High  
-*Priority:* High  
+1. Enter “a@b” as email.  
+2. Submit.  
+*Expected Result:* Stronger validation should block short domain.  
+*Actual Result:* Form accepts invalid email. 
+*Test type:* Manual 
+*Severity:* Low  
+*Priority:* Low  
 *Status:* Open  
-*Assignee:* Lena 
+*Assignee:* Lena
 
 ---
 
@@ -153,19 +157,18 @@ Testing covered routing, navigation, checkout workflow, and accessibility of maj
 *Assignee:* Peter
 
 ---
-
 ## BUG 010
-*Component:* Search  
-*Summary:* Search ignores diacritics  
+*Component:* Cart  
+*Summary:* Rounding inconsistencies between line totals and grand total  
 *Steps to Reproduce:*  
-1. Search “Jose”.  
-2. Observe missing results for “José”.  
-*Expected Result:* Search normalization should match accented characters.  
-*Actual Result:* No results returned.  
-*Severity:* Low  
-*Priority:* Low  
+1. Add multiple books with decimal pricing.  
+2. Compare line totals vs final grand total.  
+*Expected Result:* All totals must be consistently rounded.  
+*Actual Result:* Differences occur due to inconsistent rounding.  
+*Severity:* Medium  
+*Priority:* Medium  
 *Status:* Open  
-*Assignee:* Lena
+*Assignee:* Prifton
 
 ---
 
@@ -217,17 +220,17 @@ Testing covered routing, navigation, checkout workflow, and accessibility of maj
 ---
 
 ## BUG 014
-*Component:* Shipping Form  
-*Summary:* Weak email validation allows invalid addresses  
+*Component:* Mini-Cart  
+*Summary:* User can exceed available stock due to race condition  
 *Steps to Reproduce:*  
-1. Enter “a@b” as email.  
-2. Submit.  
-*Expected Result:* Stronger validation should block short domain.  
-*Actual Result:* Form accepts invalid email.  
-*Severity:* Low  
-*Priority:* Low  
+1. Add item with low stock.  
+2. Rapidly increase quantity in mini-cart.  
+*Expected Result:* Quantity capped at stock limit.  
+*Actual Result:* Quantity exceeds available stock.  
+*Severity:* High  
+*Priority:* High  
 *Status:* Open  
-*Assignee:* Lena
+*Assignee:* Lena 
 
 ---
 
