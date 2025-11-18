@@ -9,35 +9,320 @@ Prepared by: LPP Team
 
 ## 🧩 Overview
 This defect log documents bugs and usability issues detected during Week 2 testing of the Bookstore App.  
-Testing covered routing, navigation, checkout workflow, and accessibility of major components (App.js, Navbar.js, and CheckoutPage.js).
+Testing covered routing, navigation, checkout workflow, and accessibility of major components.
 
 ---
-| ID | Date | Component | Summary | Steps to Reproduce | Expected Result | Actual Result | Severity | Priority | Status | Assignee | Evidence |
-|----|------|-----------|----------|--------------------|-----------------|----------------|-----------|-----------|---------|-----------|----------|
-| BUG001 | 2025-11-12 | CheckoutPage | 'Pay Now' button allows multiple clicks | 1. Proceed to checkout<br>2. Click 'Pay Now' repeatedly | Only one payment request should trigger | Multiple payment attempts processed when clicked quickly | Critical | High | Open | Peter Adebisi | <img width="1920" height="1080" alt="Bug001" src="https://github.com/user-attachments/assets/9269d6ff-43de-4049-b00b-6e240c34e1af" /> |
-| BUG002 | 2025-11-12 | CheckoutPage | Missing input validation for postal code format | 1. Enter letters in postal code<br>2. Click 'Next' | Should display validation error | Form proceeds without validating postal code | Major | High | Open | Peter Adebisi | <img width="1920" height="1080" alt="BUG002" src="https://github.com/user-attachments/assets/e1c376a9-0568-4c3f-b678-3bbe1adf5df5" /> |
-| BUG003 | 2025-11-12 | CheckoutPage | Invalid email accepted | 1. Enter "abc@" as email<br>2. Click 'Next' | Should show "Enter valid email" error | Form accepts invalid email | Major | High | Open | Peter Adebisi | <img width="1920" height="1080" alt="BUG003" src="https://github.com/user-attachments/assets/344fac87-48c1-46f0-a5b5-60be1b34df27" />|
-| BUG004 | 2025-11-13 | CheckoutPage | Payment fails silently on network loss | 1. Disconnect network<br>2. Click 'Pay Now' | User notified of connection issue | Displays "Payment failed to start" without clear cause | Minor | Medium | Open | Lena | [Screenshot] |
-| BUG005 | 2025-11-13 | CheckoutPage | Screen reader missing ARIA roles for steps | 1. Open checkout<br>2. Inspect with screen reader | Each step should have proper ARIA labels | Screen reader reads plain text only | Minor | Medium | Open | Prifton Mliwa | [Screenshot] |
-| BUG006 | 2025-11-13 | CheckoutPage | Order confirmation flashes before redirect | 1. Complete payment<br>2. Observe redirect | Smooth redirect to /orders/:id | Confirmation flashes briefly | Cosmetic | Low | Open | Lena | [Recording] |
-| BUG007 | 2025-11-13 | Navbar | Search not submitting queries correctly | 1. Enter a book title<br>2. Press Enter | Should search and filter catalog results | Pressing Enter only redirects to /catalog without using search input | Major | High | Open | Peter Adebisi | [Screenshot] |
-| BUG008 | 2025-11-13 | Navbar | Search bar clears unexpectedly after route change | 1. Search a book<br>2. Navigate to another page<br>3. Go back | Search term should persist | Search field resets automatically | Minor | Medium | Open | Peter Adebisi | [Recording] |
-| BUG009 | 2025-11-13 | Navbar | No debounce for keypress in search | 1. Type quickly in search field | Should handle input efficiently | Input lags and re-renders cause delay | Minor | Medium | Open | Lena | [Recording] |
-| BUG010 | 2025-11-13 | Navbar | ESC key not consistently resetting focus | 1. Click in search<br>2. Press ESC repeatedly | Should clear and refocus search field | Focus sometimes lost and requires manual click | Minor | Medium | Open | Prifton Mliwa | [Recording] |
-| BUG011 | 2025-11-13 | Navbar | Cart count badge overlaps icon on mobile | 1. Open app on narrow screen<br>2. Observe cart icon | Badge should be aligned above icon | Badge overlaps with cart emoji | Cosmetic | Low | Open | Lena | [Screenshot] |
-| BUG012 | 2025-11-13 | Navbar | Missing ARIA labels on icons | 1. Inspect cart link with screen reader | Should have descriptive ARIA label | Only reads "link" without context | Minor | Medium | Open | Peter Adebisi | [Screenshot] |
-| BUG013 | 2025-11-13 | App.js | 404 redirect loops on invalid URL | 1. Visit /random-page | Should redirect once to /catalog | Rapid redirects flash multiple times | Minor | Medium | Open | Peter Adebisi | [Recording] |
 
-## 📊 Summary
+# Defect Log – Bookstore Project App
 
-### Severity Breakdown
-| Severity | Count |
-|-----------|--------|
-| Critical | 1 |
-| Major | 3 |
-| Minor | 7 |
-| Cosmetic | 2 |
-| **Total** | **13** |
+---
+
+## BUG 001
+*Component:* Checkout  
+*Summary:* UI shows USD ($) while payment gateway uses KES  
+*Steps to Reproduce:*  
+1. Open any product page.  
+2. Observe displayed price.  
+3. Proceed to checkout and view payment gateway.  
+*Expected Result:* Currency should match across UI and gateway.  
+*Actual Result:* UI uses USD; gateway uses KES.  
+*Severity:* High  
+*Priority:* High  
+*Status:* Open  
+*Assignee:* Lena
+
+---
+
+## BUG 002
+*Component:* Cart  
+*Summary:* Rounding inconsistencies between line totals and grand total  
+*Steps to Reproduce:*  
+1. Add multiple books with decimal pricing.  
+2. Compare line totals vs final grand total.  
+*Expected Result:* All totals must be consistently rounded.  
+*Actual Result:* Differences occur due to inconsistent rounding.  
+*Severity:* Medium  
+*Priority:* Medium  
+*Status:* Open  
+*Assignee:* Prifton
+
+---
+
+## BUG 003
+*Component:* Returns Module  
+*Summary:* System incorrectly accepts returns on Day 8  
+*Steps to Reproduce:*  
+1. Purchase an item.  
+2. Attempt a return 8 days after order date.  
+*Expected Result:* System should reject returns after Day 7.  
+*Actual Result:* Return is accepted on Day 8.  
+*Severity:* Medium  
+*Priority:* Medium  
+*Status:* Open  
+*Assignee:* Peter 
+
+---
+
+## BUG 004
+*Component:* Markdown / Reviews  
+*Summary:* XSS allowed via javascript: markdown link  
+*Steps to Reproduce:*  
+1. Submit review with: [test](javascript:alert('XSS')).  
+2. View rendered review.  
+*Expected Result:* Unsafe URL schemes blocked.  
+*Actual Result:* Browser executes JavaScript.  
+*Severity:* Critical  
+*Priority:* Critical  
+*Status:* Open  
+*Assignee:* Peter
+
+---
+
+## BUG 005
+*Component:* Mini-Cart  
+*Summary:* User can exceed available stock due to race condition  
+*Steps to Reproduce:*  
+1. Add item with low stock.  
+2. Rapidly increase quantity in mini-cart.  
+*Expected Result:* Quantity capped at stock limit.  
+*Actual Result:* Quantity exceeds available stock.  
+*Severity:* High  
+*Priority:* High  
+*Status:* Open  
+*Assignee:* Lena 
+
+---
+
+## BUG 006
+*Component:* Checkout Modal (A11y)  
+*Summary:* Missing aria-modal and no focus restoration  
+*Steps to Reproduce:*  
+1. Open checkout modal.  
+2. Navigate with keyboard or screen reader.  
+3. Close modal.  
+*Expected Result:* Modal traps focus and returns to trigger element.  
+*Actual Result:* Focus moves unpredictably.  
+*Severity:* Medium  
+*Priority:* Low  
+*Status:* Open  
+*Assignee:* Prifton
+
+---
+
+## BUG 007
+*Component:* CSV Export  
+*Summary:* CSV uses decimal comma instead of decimal point  
+*Steps to Reproduce:*  
+1. Export CSV with numeric fields.  
+2. Open in Excel / Google Sheets.  
+*Expected Result:* Standard decimal point formatting.  
+*Actual Result:* Uses decimal comma, breaking parsing.  
+*Severity:* Low  
+*Priority:* Low  
+*Status:* Open  
+*Assignee:* Peter  
+
+---
+
+## BUG 008
+*Component:* Notifications  
+*Summary:* Notification badge not updated after "Mark all read"  
+*Steps to Reproduce:*  
+1. Open notifications panel.  
+2. Click "Mark all read".  
+*Expected Result:* Badge resets to 0.  
+*Actual Result:* Badge still shows unread count.  
+*Severity:* Low  
+*Priority:* Medium  
+*Status:* Open  
+*Assignee:* Lena
+
+---
+
+## BUG 009
+*Component:* Image Loading / Performance  
+*Summary:* Non-lazy images causing slow page load  
+*Steps to Reproduce:*  
+1. Load homepage or catalog on mobile.  
+2. Observe image loading behavior.  
+*Expected Result:* Images should load lazily.  
+*Actual Result:* All images load instantly, impacting performance.  
+*Severity:* Medium  
+*Priority:* Low  
+*Status:* Open  
+*Assignee:* Peter
+
+---
+
+## BUG 010
+*Component:* Search  
+*Summary:* Search ignores diacritics  
+*Steps to Reproduce:*  
+1. Search “Jose”.  
+2. Observe missing results for “José”.  
+*Expected Result:* Search normalization should match accented characters.  
+*Actual Result:* No results returned.  
+*Severity:* Low  
+*Priority:* Low  
+*Status:* Open  
+*Assignee:* Lena
+
+---
+
+## BUG 011
+*Component:* Orders / Payment Success  
+*Summary:* Duplicate orders created due to double state insertion  
+*Steps to Reproduce:*  
+1. Proceed through checkout.  
+2. Complete payment successfully.  
+3. Check order history.  
+*Expected Result:* Only one order appears.  
+*Actual Result:* Order duplicated.  
+*Severity:* High  
+*Priority:* High  
+*Status:* Open  
+*Assignee:* Checkout Dev  
+*Evidence:* Two identical orders appear.
+
+---
+
+## BUG 012
+*Component:* State Management  
+*Summary:* Stale orders state used in callback  
+*Steps to Reproduce:*  
+1. Perform multiple checkouts quickly.  
+2. Check order state.  
+*Expected Result:* State updates should use latest values.  
+*Actual Result:* Overwritten or missing entries.  
+*Severity:* Medium  
+*Priority:* Medium  
+*Status:* Open  
+*Assignee:* Prifton
+
+---
+
+## BUG 013
+*Component:* Checkout Navigation  
+*Summary:* User can navigate back to payment after success  
+*Steps to Reproduce:*  
+1. Complete payment.  
+2. On confirmation page, press browser back.  
+*Expected Result:* Should not return to payment page.  
+*Actual Result:* Loads payment step again.  
+*Severity:* Medium  
+*Priority:* Medium  
+*Status:* Open  
+*Assignee:* Lena
+
+---
+
+## BUG 014
+*Component:* Shipping Form  
+*Summary:* Weak email validation allows invalid addresses  
+*Steps to Reproduce:*  
+1. Enter “a@b” as email.  
+2. Submit.  
+*Expected Result:* Stronger validation should block short domain.  
+*Actual Result:* Form accepts invalid email.  
+*Severity:* Low  
+*Priority:* Low  
+*Status:* Open  
+*Assignee:* Lena
+
+---
+
+## BUG 015
+*Component:* Checkout Cart Validation  
+*Summary:* Checkout allows empty cart when transitioning steps  
+*Steps to Reproduce:*  
+1. Start checkout with items in cart.  
+2. Remove all items using another browser tab.  
+3. Continue in existing checkout tab.  
+*Expected Result:* Should stop user when cart is empty.  
+*Actual Result:* User continues with empty cart.  
+*Severity:* High  
+*Priority:* Medium  
+*Status:* Open  
+*Assignee:* Peter
+
+---
+
+## BUG 016
+*Component:* Payment  
+*Summary:* No timeout handling if payment gateway hangs  
+*Steps to Reproduce:*  
+1. Start payment.  
+2. Simulate hanging gateway.  
+*Expected Result:* Should show timeout error after X seconds.  
+*Actual Result:* UI stays stuck on “Processing…” indefinitely.  
+*Severity:* High  
+*Priority:* Medium  
+*Status:* Open  
+*Assignee:* Peter
+
+---
+
+## BUG 017
+*Component:* Order Details  
+*Summary:* Missing book image breaks layout  
+*Steps to Reproduce:*  
+1. Create order with missing book.image.  
+2. Open order details.  
+*Expected Result:* Should fallback to placeholder image.  
+*Actual Result:* UI breaks or shows broken image icon.  
+*Severity:* Medium  
+*Priority:* Low  
+*Status:* Open  
+*Assignee:* Prifton
+
+---
+
+## BUG 018
+*Component:* Order Status  
+*Summary:* Unknown status values break status progress calculation  
+*Steps to Reproduce:*  
+1. Create an order with custom status.  
+2. Open order details.  
+*Expected Result:* App should handle unknown statuses gracefully.  
+*Actual Result:* Progress bar resets incorrectly to first step.  
+*Severity:* Medium  
+*Priority:* Low  
+*Status:* Open  
+*Assignee:* Prifton
+
+---
+
+## BUG 019
+*Component:* Shipping Form  
+*Summary:* Postal code & country fields accept invalid formats  
+*Steps to Reproduce:*  
+1. Enter “&&&” as postal code.  
+2. Enter “Earth” as country.  
+3. Submit.  
+*Expected Result:* Validation should reject invalid formats.  
+*Actual Result:* Form accepts all values.  
+*Severity:* Low  
+*Priority:* Low  
+*Status:* Open  
+*Assignee:* Lena
+
+---
+
+## BUG 020
+*Component:* Order ID Generation  
+*Summary:* Time-based IDs (Date.now()) can collide  
+*Steps to Reproduce:*  
+1. Submit two orders almost simultaneously.  
+2. Check order list.  
+*Expected Result:* Each order should have a unique ID.  
+*Actual Result:* Same ID is generated in rare cases.  
+*Severity:* High  
+*Priority:* Medium  
+*Status:* Open  
+*Assignee:* Peter
+
+---
+
 ---
 
 ## 🧠 Notes
@@ -52,7 +337,4 @@ Testing covered routing, navigation, checkout workflow, and accessibility of maj
 Prepared by:  
  LPP TEAM
 📅 November 13, 2025  
-
 📁 File: tests/defect-log.md
-
-
