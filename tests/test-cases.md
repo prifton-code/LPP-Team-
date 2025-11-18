@@ -420,6 +420,7 @@ test/evidence/FR-CART-002.png
 2. Search for "Harry's"
 3. Search for "book-title"
 **Expected:** Handles special characters gracefully
+
 **Evidence:** `/test/evidence/FR-CAT-014.png`
 
 ---
@@ -431,6 +432,7 @@ test/evidence/FR-CART-002.png
 2. Search "harry potter" (lowercase)
 3. Search "Harry Potter" (mixed case)
 **Expected:** All return same results
+
 **Evidence:** `/test/evidence/FR-CAT-015.png`
 
 ---
@@ -442,6 +444,7 @@ test/evidence/FR-CART-002.png
 2. Verify "No results found" message
 3. Check if suggestions appear
 **Expected:** Clear empty state message
+
 **Evidence:** `/test/evidence/FR-CAT-016.png`
 
 ---
@@ -453,6 +456,7 @@ test/evidence/FR-CART-002.png
 2. Navigate to cart
 3. Return to catalog
 **Expected:** Search results maintained or cleared (document which)
+
 **Evidence:** `/test/evidence/FR-CAT-017.png`
 
 ---
@@ -466,6 +470,7 @@ test/evidence/FR-CART-002.png
 2. Try to increase quantity to 1000
 3. Check if there's a maximum limit
 **Expected:** Reasonable quantity limit enforced
+
 **Evidence:** `/test/evidence/FR-CART-007.png`
 
 ---
@@ -477,6 +482,7 @@ test/evidence/FR-CART-002.png
 2. Navigate away and add same book again
 3. Check if quantity increases vs. duplicate entry
 **Expected:** Quantity increments, no duplicates
+
 **Evidence:** `/test/evidence/FR-CART-008.png`
 
 ---
@@ -488,6 +494,7 @@ test/evidence/FR-CART-002.png
 2. Remove 1 book
 3. Verify cart badge shows correct count (2)
 **Expected:** Badge accurately reflects total items
+
 **Evidence:** `/test/evidence/FR-CART-009.png`
 
 ---
@@ -499,58 +506,14 @@ test/evidence/FR-CART-002.png
 2. Open new tab with same site
 3. Check if cart syncs between tabs
 **Expected:** Cart state consistent across tabs
+
 **Evidence:** `/test/evidence/FR-CART-010.png`
-
----
-
-## Payment & Checkout Enhancements
-
-### 32. TC-CHK-010: Invalid Card Number Handling
-**Priority:** High  
-**Steps:**
-1. Enter "1234 5678 9101 1121" (invalid)
-2. Submit payment
-3. Verify proper error message
-**Expected:** Clear invalid card message
-**Evidence:** `/test/evidence/FR-CHK-010.png`
-
----
-
-### 33. TC-CHK-011: Expired Card Test
-**Priority:** Medium  
-**Steps:**
-1. Enter expired date (01/2020)
-2. Submit payment
-**Expected:** "Card expired" error message
-**Evidence:** `/test/evidence/FR-CHK-011.png`
-
----
-
-### 34. TC-CHK-012: Order Summary Accuracy
-**Priority:** High  
-**Steps:**
-1. Add 2 books ($10 + $15)
-2. Go to checkout
-3. Verify subtotal, tax, shipping, total
-**Expected:** All calculations correct
-**Evidence:** `/test/evidence/FR-CHK-012.png`
-
----
-
-### 35. TC-CHK-013: Payment Cancellation Flow
-**Priority:** Medium  
-**Steps:**
-1. Start payment process
-2. Click "Cancel" in Paystack
-3. Verify return to checkout page
-**Expected:** Graceful cancellation handling
-**Evidence:** `/test/evidence/FR-CHK-013.png`
 
 ---
 
 ## Responsive Design Tests
 
-### 36. TC-RESP-001: Mobile Navigation
+### 32. TC-RESP-001: Mobile Navigation
 **Priority:** Medium  
 **Environment:** Mobile Chrome  
 **Steps:**
@@ -558,11 +521,12 @@ test/evidence/FR-CART-002.png
 2. Test hamburger menu
 3. Verify touch targets (min 44px)
 **Expected:** Mobile navigation works smoothly
+
 **Evidence:** `/test/evidence/FR-RESP-001.png`
 
 ---
 
-### 37. TC-RESP-002: Tablet Layout
+### 33. TC-RESP-002: Tablet Layout
 **Priority:** Low  
 **Environment:** Tablet  
 **Steps:**
@@ -570,161 +534,22 @@ test/evidence/FR-CART-002.png
 2. Check catalog grid (2-3 columns)
 3. Verify readable text sizes
 **Expected:** Optimized tablet layout
+
 **Evidence:** `/test/evidence/FR-RESP-002.png`
 
 ---
 
-### 38. TC-RESP-003: Small Mobile (320px)
+### 34. TC-RESP-003: Small Mobile (320px)
 **Priority:** Medium  
 **Steps:**
 1. Resize to 320px width
 2. Check for horizontal scrolling
 3. Verify buttons still clickable
 **Expected:** No layout breaks on small screens
+
 **Evidence:** `/test/evidence/FR-RESP-003.png`
 
 ---
-
-## Security & Error Handling
-
-### 39. TC-SEC-001: XSS Injection in Search
-**Priority:** High  
-**Steps:**
-1. Search for: `<script>alert('xss')</script>`
-2. Search for: `"<img src=x onerror=alert(1)>"`
-**Expected:** Script tags sanitized, no execution
-**Evidence:** `/test/evidence/FR-SEC-001.png`
-
----
-
-### 40. TC-SEC-002: SQL Injection Attempt
-**Priority:** High  
-**Steps:**
-1. Search for: `' OR '1'='1`
-2. Search for: `'; DROP TABLE users; --`
-**Expected:** Handled gracefully, no errors
-**Evidence:** `/test/evidence/FR-SEC-002.png`
-
----
-
-### 41. TC-ERR-001: Network Failure Recovery
-**Priority:** Medium  
-**Steps:**
-1. Open browser dev tools
-2. Set network to "Offline"
-3. Try to search/add to cart
-4. Go back online
-**Expected:** Graceful error states, recovery when online
-**Evidence:** `/test/evidence/FR-ERR-001.png`
-
----
-
-### 42. TC-ERR-002: LocalStorage Corruption
-**Priority:** Low  
-**Steps:**
-1. Open browser console
-2. Run: `localStorage.setItem('app.cart', 'invalid json')`
-3. Refresh page
-**Expected:** Handles corrupt data without crashing
-**Evidence:** `/test/evidence/FR-ERR-002.png`
-
----
-
-## Accessibility Enhancements
-
-### 43. TC-A11Y-004: Color Contrast Compliance
-**Priority:** Medium  
-**Steps:**
-1. Run color contrast checker
-2. Test text on buttons
-3. Test error messages
-**Expected:** Minimum 4.5:1 contrast ratio
-**Evidence:** `/test/evidence/FR-A11Y-004.png`
-
----
-
-### 44. TC-A11Y-005: Form Label Associations
-**Priority:** Medium  
-**Steps:**
-1. Check all form inputs
-2. Verify proper `label for` attributes
-3. Test with screen reader
-**Expected:** All inputs have associated labels
-**Evidence:** `/test/evidence/FR-A11Y-005.png`
-
----
-
-### 45. TC-A11Y-006: Focus Management in Modals
-**Priority:** Medium  
-**Steps:**
-1. Open payment modal
-2. Press Tab repeatedly
-3. Verify focus doesn't leave modal
-**Expected:** Proper focus trapping
-**Evidence:** `/test/evidence/FR-A11Y-006.png`
-
----
-
-## Performance Enhancements
-
-### 46. TC-PERF-003: Image Loading Optimization
-**Priority:** Medium  
-**Steps:**
-1. Check if images have lazy loading
-2. Verify appropriate image sizes
-3. Check for WebP format support
-**Expected:** Optimized image delivery
-**Evidence:** `/test/evidence/FR-PERF-003.png`
-
----
-
-### 47. TC-PERF-004: JavaScript Bundle Size
-**Priority:** Low  
-**Steps:**
-1. Run bundle analyzer
-2. Check for large dependencies
-3. Verify code splitting
-**Expected:** Reasonable bundle size (< 2MB)
-**Evidence:** `/test/evidence/FR-PERF-004.png`
-
----
-
-## Edge Case Tests
-
-### 48. TC-EDGE-001: Very Long Book Titles
-**Priority:** Low  
-**Steps:**
-1. Find book with long title
-2. Verify title truncation/display
-3. Check mobile layout
-**Expected:** Long text handled gracefully
-**Evidence:** `/test/evidence/FR-EDGE-001.png`
-
----
-
-### 49. TC-EDGE-002: High Price Values
-**Priority:** Low  
-**Steps:**
-1. Test with $999.99 book price
-2. Add multiple to cart
-3. Verify total calculation
-**Expected:** Handles high values correctly
-**Evidence:** `/test/evidence/FR-EDGE-002.png`
-
----
-
-### 50. TC-EDGE-003: Rapid Sequential Actions
-**Priority:** Medium  
-**Steps:**
-1. Quickly click "Add to Cart" 10 times
-2. Rapidly change quantities
-3. Navigate quickly between pages
-**Expected:** No crashes, state remains consistent
-**Evidence:** `/test/evidence/FR-EDGE-003.png`
-
-
-
-
 
 
 
