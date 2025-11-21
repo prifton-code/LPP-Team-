@@ -460,5 +460,7 @@ The objectives of this testing cycle were:
 - Test case templates and bug report templates standardize documentation for the team.  
 
 ---
-![PLP Academy Logo](<img width="3000" height="1688" alt="plp logo" src="https://github.com/user-attachments/assets/2678a230-7bae-40fa-b28e-164d09001bb8" />)
+
 # End of Report
+
+<img width="3000" height="1688" alt="plp logo" src="https://github.com/user-attachments/assets/c78ec0d4-3689-4b25-ba45-28c6ed1109b5" />)
